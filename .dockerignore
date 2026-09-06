@@ -1,0 +1,41 @@
+﻿# Git
+.git
+.gitignore
+
+# Flutter / Dart
+.dart_tool/
+build/
+android/
+ios/
+linux/
+macos/
+windows/
+web/
+lib/
+test/
+pubspec.lock
+
+# Python cache & virtual environments
+**/__pycache__/
+**/*.py[cod]
+**/.venv/
+**/env/
+**/venv/
+
+# Notebooks & Testing
+**/notebooks/
+**/*.ipynb
+**/.pytest_cache/
+
+# Data & caches
+**/data/
+**/preprocessed_data/
+**/public/
+**/temp/
+**/mlruns/
+**/*.log
+
+# IDE
+.idea/
+.vscode/
+*.iml

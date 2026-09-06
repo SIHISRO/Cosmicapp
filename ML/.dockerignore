@@ -1,0 +1,44 @@
+﻿# Git
+.git
+.gitignore
+
+# Python cache & virtual environments
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+env/
+venv/
+ENV/
+build/
+dist/
+*.egg-info/
+
+# Testing & notebooks
+.pytest_cache/
+.coverage
+htmlcov/
+notebooks/
+*.ipynb
+.ipynb_checkpoints/
+
+# IDE & OS
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Heavy datasets and runtime temp folders (mounted via volumes)
+data/
+preprocessed_data/
+public/
+temp/
+mlruns/
+*.log
+
+# Docker metadata
+.dockerignore

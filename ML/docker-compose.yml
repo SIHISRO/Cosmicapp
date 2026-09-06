@@ -1,0 +1,57 @@
+services:
+  ml-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sih-ml-backend
+    restart: unless-stopped
+    ports:
+      - "${PORT:-8000}:8000"
+    environment:
+      - PORT=8000
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+      - HF_HOME=/root/.cache/huggingface
+      - TORCH_HOME=/root/.cache/torch
+      # Optional MLflow configuration
+      - MLFLOW_TRACKING_URI=${MLFLOW_TRACKING_URI:-}
+    volumes:
+      # Persistent cache for HuggingFace model weights (best_lunar_loftr.pt)
+      - hf_cache:/root/.cache/huggingface
+      # Persistent cache for PyTorch hub / LoFTR pretrained outdoor weights
+      - torch_cache:/root/.cache/torch
+      # Mount local artifacts directory for model weights
+      - ./artifacts:/app/artifacts
+      # Mount public directory for temporary uploaded and generated image files
+      - ./public:/app/public
+      # Live code reload mounts for development (uncomment to edit code without rebuild):
+      # - ./api:/app/api
+      # - ./src:/app/src
+      # - ./main.py:/app/main.py
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    networks:
+      - sih-network
+    deploy:
+      resources:
+        reservations:
+          memory: 2G
+        limits:
+          memory: 8G
+
+volumes:
+  hf_cache:
+    name: sih_ml_hf_cache
+    driver: local
+  torch_cache:
+    name: sih_ml_torch_cache
+    driver: local
+
+networks:
+  sih-network:
+    name: sih-network
+    driver: bridge

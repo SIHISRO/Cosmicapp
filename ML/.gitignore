@@ -1,0 +1,42 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments and package managers
+.venv
+.uv/
+
+# Data and temporary outputs
+data/
+temp/
+artifacts/
+preprocessed_data/
+
+# Model files
+*.pkl
+*.pth
+
+# Images (input/output)
+*.png
+*.jpg
+*.jpeg
+
+# Environment variables
+*.env
+.env
+
+# Local Documentation (removed from Git)
+ml_review.md
+backend_to_ml_confirmation.md
+
+# IDE and OS files
+.vscode/
+.idea/
+.DS_Store
+
+# Temporary runtime directories
+public/temp/

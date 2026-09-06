@@ -1,0 +1,35 @@
+services:
+  backend:
+    build:
+      context: ./ML
+      dockerfile: Dockerfile
+    container_name: cosmic_backend
+    restart: unless-stopped
+    ports:
+      - "${PORT:-8000}:8000"
+    environment:
+      - PORT=8000
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+      - HF_HOME=/root/.cache/huggingface
+      - TORCH_HOME=/root/.cache/torch
+    volumes:
+      - sih_ml_hf_cache:/root/.cache/huggingface
+      - sih_ml_torch_cache:/root/.cache/torch
+      - ./ML/artifacts:/app/artifacts
+      - ./ML/public:/app/public
+      - ./ML/data:/app/data
+      - ./ML/preprocessed_data:/app/preprocessed_data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+volumes:
+  sih_ml_hf_cache:
+    driver: local
+  sih_ml_torch_cache:
+    driver: local
+
